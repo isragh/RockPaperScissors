@@ -1,7 +1,9 @@
 const playerScore = document.getElementById('player-score');
+const computerScore = document.getElementById('computer-score');
 const hands = document.getElementById('hands');
 const updateResult = document.getElementById('result');
 const clean = document.getElementById('endGameButton');
+const values = document.querySelectorAll('.rpsButton');
 
 function getComputerChoice() {
   let choices = ['Rock', 'Paper', 'Scissors'];
@@ -22,7 +24,6 @@ function getResult(playerChoice, computerChoice) {
     score = 1;
   } else score = -1;
 
-  console.log(score);
   return score;
 }
 
@@ -39,10 +40,13 @@ function showResult(score, playerChoice, computerChoice) {
       break;
   }
 
-  playerScore.innerText = Number(playerScore.innerText) + score;
+  if (score === 1) {
+    playerScore.innerText = Number(playerScore.innerText) + score;
+  } else if (score === -1) {
+    computerScore.innerText = Number(computerScore.innerText) - score;
+  }
 
   hands.innerText = `👱 ${playerChoice.value} vs 🤖 ${computerChoice}`;
-  console.log(playerChoice);
 }
 
 function onClickRPS(playerChoice) {
@@ -52,14 +56,14 @@ function onClickRPS(playerChoice) {
 }
 
 function playGame() {
-  const values = document.querySelectorAll('.rpsButton');
   values.forEach(value => value.onclick = () => onClickRPS(value));
 
   clean.onclick = () => endGame();
 }
 
 function endGame() {
-  playerScore.innerText = '';
+  playerScore.innerText = 0;
+  computerScore.innerText = 0;
   updateResult.innerText = '';
   hands.innerText = '';
 }
